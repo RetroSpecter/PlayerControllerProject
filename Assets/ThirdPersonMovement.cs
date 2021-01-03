@@ -9,6 +9,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private Camera cam;
 
     public Animator anim;
+    public GameObject tiltObject, sideWaysTiltObject;
+
     public float walkSpeed = 6f;
     public float runSpeed = 12f;
     [Space]
@@ -47,8 +49,8 @@ public class ThirdPersonMovement : MonoBehaviour
         Vector3 dir = (Vector3)(Quaternion.Euler(0, targetAngle, 0) * Vector3.forward);
         float horizMovement = Vector3.SignedAngle(transform.forward, dir, Vector3.up) * input.magnitude;
         float leanAngle = Mathf.SmoothDampAngle(anim.transform.localRotation.x, Mathf.Lerp(0, maxLean, Mathf.Abs(horizMovement)) * Mathf.Sign(horizMovement), ref leanSmoothVelocity, leanSmoothTime);
-        anim.transform.localRotation = Quaternion.Euler(leanAngle, 90, 0);
-
+        tiltObject.transform.localRotation = Quaternion.Euler(0, 0, -leanAngle);
+        sideWaysTiltObject.transform.localRotation = Quaternion.Euler(0,leanAngle,0);
 
         float animSpeed = Mathf.SmoothDamp(anim.GetFloat("movementSpeed"), input.magnitude * (Input.GetKey(KeyCode.Mouse0) ? 2.1f : 1), ref smoothVelocity, turnSmoothTime);
         anim.SetFloat("movementSpeed", animSpeed);

@@ -60,6 +60,7 @@ public class MultiRotationRiggingWindow : EditorWindow
             WeightedTransformArray wta = new WeightedTransformArray(0);
             wta.Add(new WeightedTransform(targetBone, 1));
             newConstraint.data.sourceObjects = wta;
+            //newConstraint.data.maintainOffset = false;
 
             MultirotateBone(sourceBone, targetBone, newBlend.transform);
         }
